@@ -1,6 +1,8 @@
 package com.example.loja_virtual_bff.business.services;
 
+import com.example.loja_virtual_bff.api.request.ProdutoRequestDTO;
 import com.example.loja_virtual_bff.api.response.ProductsDTO;
+import com.example.loja_virtual_bff.api.response.ProdutoResponseDTO;
 import com.example.loja_virtual_bff.infrastructure.clients.produtosclient.ProdutosClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,12 +15,27 @@ public class ProdutosService {
 
     private final ProdutosClient client;
 
-    public List<ProductsDTO> buscaTodosProdutos(){
+    public List<ProdutoResponseDTO> buscaTodosProdutos(){
         return client.buscaTodosProdutos();
     }
 
-    public ProductsDTO buscaProdutosPorNome(String nome){
-        return client.buscaProdutosPorNome(nome);
+    public ProdutoResponseDTO buscaProdutosPorId(String id){
+        return client.buscaProdutosPorId(id);
     }
 
+    public ProdutoResponseDTO salvaNovoProduto(ProdutoRequestDTO produtoRequestDTO){
+        return client.salvaNovosProdutos(produtoRequestDTO);
+    }
+
+    public ProdutoResponseDTO atualizaProdutoPorId(String id, ProdutoRequestDTO produtoRequestDTO){
+        return client.atualizaProdutoPorId(id, produtoRequestDTO);
+    }
+
+    public void deletaProdutoPorId(String id){
+        client.deletaProdutoPorId(id);
+    }
+
+    public boolean existsPorId(String id) {
+        return client.existsPorId(id);
+    }
 }

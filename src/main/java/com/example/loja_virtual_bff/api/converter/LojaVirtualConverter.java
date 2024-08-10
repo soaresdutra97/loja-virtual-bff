@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Component
 public class LojaVirtualConverter {
 
+    //CONVERTE DE COMPRADTO PARA CARTAODTO
     public CartaoRequestDTO paraCartaoRequestDTO(String nome, CompraRequestDTO compraRequestDTO, BigDecimal valor,
                                                  EnderecoResponseDTO enderecoResponseDTO){
         return CartaoRequestDTO.builder()

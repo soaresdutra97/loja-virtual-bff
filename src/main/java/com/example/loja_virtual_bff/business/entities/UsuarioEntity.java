@@ -1,6 +1,7 @@
 package com.example.loja_virtual_bff.business.entities;
 
 import com.example.loja_virtual_bff.api.request.EnderecoRequestDTO;
+import com.example.loja_virtual_bff.api.response.ProdutoResponseDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,25 +22,20 @@ public class UsuarioEntity implements UserDetails {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "nome", nullable = false)
     private String nome;
-
     @Column(name = "email", unique = true, nullable = false)
     private String email;
-
     @Column(name = "password", nullable = false)
     private String password;
-
     @Column(name = "role", nullable = false)
     private UserRole role;
-
     @Column(name = "documento", nullable = false, unique = true)
     private String documento;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private EnderecoEntity endereco;
+
 
     public UsuarioEntity(String email, String password, UserRole role, String documento, String nome, EnderecoEntity endereco){
         this.email = email;

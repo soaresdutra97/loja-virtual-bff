@@ -6,17 +6,23 @@ import com.example.loja_virtual_bff.business.entities.RegisterDTO;
 import com.example.loja_virtual_bff.business.entities.UsuarioEntity;
 import com.example.loja_virtual_bff.infrastructure.repositories.UsuarioRepository;
 import com.example.loja_virtual_bff.infrastructure.security.TokenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
+@Tag(name = "Autenticação")
 public class AuthenticationController {
 
     @Autowired
@@ -27,6 +33,11 @@ public class AuthenticationController {
     @Autowired
     TokenService tokenService;
 
+    @Operation(summary = "Login com um usuário", method ="POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar login"),
+    })
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
         var usenamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
@@ -35,6 +46,11 @@ public class AuthenticationController {
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
+    @Operation(summary = "Cria conta usuário", method ="POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário criado com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Erro ao criar usuário"),
+    })
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
         if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();

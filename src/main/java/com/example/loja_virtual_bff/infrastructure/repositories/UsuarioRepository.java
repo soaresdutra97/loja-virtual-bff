@@ -12,5 +12,4 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
     @Transactional
     void deleteByEmail(String email);
 
-    //UsuarioEntity findByEmail(String email);
 }
