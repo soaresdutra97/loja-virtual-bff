@@ -31,10 +31,18 @@ public class SecurityConfigurations {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+
+                        //Produtos
                         .requestMatchers(HttpMethod.POST, "/produtos").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/produtos").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/produtos").hasRole("ADMIN")
+
+                        //Usuários
                         .requestMatchers(HttpMethod.GET, "/usuarios/all").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/deletar").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/buscaremail").hasRole("ADMIN")
+
+
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

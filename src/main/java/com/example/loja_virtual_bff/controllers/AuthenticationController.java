@@ -1,8 +1,9 @@
 package com.example.loja_virtual_bff.controllers;
 
-import com.example.loja_virtual_bff.business.entities.AuthenticationDTO;
-import com.example.loja_virtual_bff.business.entities.LoginResponseDTO;
-import com.example.loja_virtual_bff.business.entities.RegisterDTO;
+import com.example.loja_virtual_bff.api.request.AuthenticationDTO;
+import com.example.loja_virtual_bff.api.request.RegisterRequestDTO;
+import com.example.loja_virtual_bff.api.response.LoginResponseDTO;
+import com.example.loja_virtual_bff.api.request.RegisterDTO;
 import com.example.loja_virtual_bff.business.entities.UsuarioEntity;
 import com.example.loja_virtual_bff.infrastructure.repositories.UsuarioRepository;
 import com.example.loja_virtual_bff.infrastructure.security.TokenService;
@@ -18,6 +19,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import static com.example.loja_virtual_bff.business.entities.UserRole.USER;
 
 @RestController
 @RequestMapping("/auth")
@@ -52,16 +55,16 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "500", description = "Erro ao criar usuário"),
     })
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
+    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO data){
         if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         UsuarioEntity newUser = new UsuarioEntity(
                 data.email(),
                 encryptedPassword,
-                data.role(),
                 data.documento(),
                 data.nome(),
                 data.endereco());
+        newUser.setRole(USER);
         this.repository.save(newUser);
         return ResponseEntity.ok().build();
     }

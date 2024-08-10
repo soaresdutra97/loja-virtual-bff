@@ -40,11 +40,11 @@ public class ProductsController {
             @ApiResponse(responseCode = "500", description = "Erro ao buscar os dados"),
     })
     @GetMapping("/produtos/search")
-    public ResponseEntity <ProdutoResponseDTO> buscaProdutosPorNome(@RequestParam("id") String id){
+    public ResponseEntity <ProdutoResponseDTO> buscaProdutosPorId(@RequestParam("id") String id){
         return ResponseEntity.ok(produtosService.buscaProdutosPorId(id));
     }
 
-    @Operation(summary = "Salva Novo Produto", method ="POST")
+    @Operation(summary = "Salva Novo Produto (Admin)", method ="POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produto salvo com sucesso"),
             @ApiResponse(responseCode = "500", description = "Erro ao salvar produto"),
@@ -54,7 +54,7 @@ public class ProductsController {
         return ResponseEntity.ok(produtosService.salvaNovoProduto(produtoRequestDTO));
     }
 
-    @Operation(summary = "Atualiza Produto por ID", method ="PUT")
+    @Operation(summary = "Atualiza Produto por ID (Admin)", method ="PUT")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produto atualizado com sucesso"),
             @ApiResponse(responseCode = "500", description = "Erro ao atualizar produto"),
@@ -64,7 +64,7 @@ public class ProductsController {
         return ResponseEntity.ok(produtosService.atualizaProdutoPorId(id, produtoRequestDTO));
     }
 
-    @Operation(summary = "Deleta Produto por ID", method ="DELETE")
+    @Operation(summary = "Deleta Produto por ID (Admin)", method ="DELETE")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produto deletadocom sucesso"),
             @ApiResponse(responseCode = "500", description = "Erro ao deletar produto"),

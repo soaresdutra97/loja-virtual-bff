@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface CarrinhoItemRepository extends JpaRepository<CarrinhoEntity, Long> {
+public interface CarrinhoRepository extends JpaRepository<CarrinhoEntity, Long> {
 
     List<CarrinhoEntity> findByUsuarioId(Long usuarioId);
     Optional<CarrinhoEntity> findByUsuarioIdAndProdutoId(Long usuarioId, String produtoId);

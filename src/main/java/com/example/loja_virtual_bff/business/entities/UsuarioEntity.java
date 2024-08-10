@@ -44,7 +44,14 @@ public class UsuarioEntity implements UserDetails {
         this.documento = documento;
         this.nome = nome;
         this.endereco = endereco;
+    }
 
+    public UsuarioEntity(String email, String encryptedPassword, String documento, String nome, EnderecoEntity endereco) {
+        this.email = email;
+        this.documento = documento;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.password = encryptedPassword;
     }
 
     @Override
