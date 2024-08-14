@@ -13,8 +13,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("API Documentation")
-                        .description("Documentação das APIs da sua aplicação")
+                .info(new Info().title("Back-end Loja Virtual")
+                        .description("Documentação das APIs")
                         .version("1.0.0"))
                         .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                         .components(new io.swagger.v3.oas.models.Components()

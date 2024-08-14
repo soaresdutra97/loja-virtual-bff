@@ -2,7 +2,10 @@ package com.example.loja_virtual_bff.controllers;
 
 import com.example.loja_virtual_bff.api.request.UsuarioRequestDTO;
 import com.example.loja_virtual_bff.api.response.UsuarioResponseDTO;
+import com.example.loja_virtual_bff.business.entities.UsuarioEntity;
 import com.example.loja_virtual_bff.business.services.UsuarioService;
+import com.example.loja_virtual_bff.infrastructure.security.TokenService;
+import feign.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -10,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +24,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Usuários")
 public class UsuariosController {
+
+    private final TokenService tokenService;
 
     private final UsuarioService usuariosService;
 
@@ -64,4 +70,34 @@ public class UsuariosController {
     public ResponseEntity <List<UsuarioResponseDTO>> buscaTodosUsuarios(){
         return ResponseEntity.ok(usuariosService.buscaTodosUsuariosCadastrados());
     }
+
+    @Operation(summary = "Retorna Dados do Usuário pelo Token", method ="GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuários encontrados com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Usuários não encontrados com sucesso"),
+    })
+    @GetMapping("/usr")
+    public ResponseEntity<UsuarioEntity> retornaUsuarioToken(@AuthenticationPrincipal UsuarioEntity usuario){
+        return ResponseEntity.ok(usuario);
+    }
+
+    @Operation(summary = "retorna token ativo", method ="GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuários encontrados com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Usuários não encontrados com sucesso"),
+    })
+    @GetMapping("/tkn")
+    public ResponseEntity<String> retornaToken(){
+        String token = tokenService.getActiveToken();
+        System.out.println(token);
+        if (token != null) {
+            // Retorna o token JWT ativo
+            return ResponseEntity.ok(token);
+        } else {
+            // Retorna uma resposta 401 Unauthorized se o token não estiver presente
+            return ResponseEntity.status(401).body("Nenhum token JWT ativo encontrado.");
+        }
+    }
+
+
 }

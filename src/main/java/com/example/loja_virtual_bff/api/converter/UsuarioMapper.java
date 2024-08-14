@@ -18,5 +18,4 @@ public interface UsuarioMapper {
     UsuarioResponseDTO converteEntityparaDto(UsuarioEntity usuarioEntity);
     List<UsuarioResponseDTO> converteEntityParaDtoList(List<UsuarioEntity> usuarioEntities);
 
-
 }

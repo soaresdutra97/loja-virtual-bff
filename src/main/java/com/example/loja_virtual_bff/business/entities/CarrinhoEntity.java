@@ -1,10 +1,14 @@
 package com.example.loja_virtual_bff.business.entities;
 
+import com.example.loja_virtual_bff.api.response.ProdutoResponseDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 @Entity
 @Table(name = "carrinho_item")

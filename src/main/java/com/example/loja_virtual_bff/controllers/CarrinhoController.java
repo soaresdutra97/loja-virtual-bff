@@ -2,6 +2,7 @@ package com.example.loja_virtual_bff.controllers;
 
 import com.example.loja_virtual_bff.api.request.CarrinhoProdutoDTO;
 import com.example.loja_virtual_bff.api.request.ProdutoRequestDTO;
+import com.example.loja_virtual_bff.api.response.CarrinhoResponseDTO;
 import com.example.loja_virtual_bff.business.entities.CarrinhoEntity;
 import com.example.loja_virtual_bff.business.services.CarrinhoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,8 +54,8 @@ public class CarrinhoController {
             @ApiResponse(responseCode = "500", description = "Erro ao Listar Produtos"),
     })
     @GetMapping("/listar")
-    public ResponseEntity<List<CarrinhoProdutoDTO>> listarItensDoCarrinho(@RequestParam Long usuarioId) {
-        List<CarrinhoProdutoDTO> itens = carrinhoService.listarItensDoCarrinho(usuarioId);
+    public ResponseEntity<List<CarrinhoResponseDTO>> listarItensDoCarrinho(@RequestParam Long usuarioId) {
+        List<CarrinhoResponseDTO> itens = carrinhoService.listarItensDoCarrinho(usuarioId);
         return ResponseEntity.ok(itens);
     }
 }

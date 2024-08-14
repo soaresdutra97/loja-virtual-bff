@@ -3,7 +3,6 @@ package com.example.loja_virtual_bff.controllers;
 import com.example.loja_virtual_bff.api.request.AuthenticationDTO;
 import com.example.loja_virtual_bff.api.request.RegisterRequestDTO;
 import com.example.loja_virtual_bff.api.response.LoginResponseDTO;
-import com.example.loja_virtual_bff.api.request.RegisterDTO;
 import com.example.loja_virtual_bff.business.entities.UsuarioEntity;
 import com.example.loja_virtual_bff.infrastructure.repositories.UsuarioRepository;
 import com.example.loja_virtual_bff.infrastructure.security.TokenService;

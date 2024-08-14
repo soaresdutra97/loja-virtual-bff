@@ -2,6 +2,8 @@ package com.example.loja_virtual_bff.api.request;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor

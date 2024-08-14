@@ -1,6 +1,8 @@
 package com.example.loja_virtual_bff.business.services;
 
 import com.example.loja_virtual_bff.api.request.CarrinhoProdutoDTO;
+import com.example.loja_virtual_bff.api.response.CarrinhoResponseDTO;
+import com.example.loja_virtual_bff.api.response.ProdutoResponseDTO;
 import com.example.loja_virtual_bff.business.entities.CarrinhoEntity;
 import com.example.loja_virtual_bff.business.entities.UsuarioEntity;
 import com.example.loja_virtual_bff.infrastructure.repositories.CarrinhoRepository;
@@ -73,15 +75,24 @@ public class CarrinhoService {
         carrinhoRepository.delete(item);
     }
 
-    public List<CarrinhoProdutoDTO> listarItensDoCarrinho(Long usuarioId) {
+    public List<CarrinhoResponseDTO> listarItensDoCarrinho(Long usuarioId) {
         // Verifica se o usuário existe
         UsuarioEntity usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         // Lista os itens do carrinho e converte para DTO
         List<CarrinhoEntity> itens = carrinhoRepository.findByUsuarioId(usuarioId);
-        return itens.stream()
-                .map(item -> new CarrinhoProdutoDTO(item.getProdutoId(), item.getQuantidade()))
-                .collect(Collectors.toList());
+        return itens.stream().map(item -> {
+            // Busca as informações do produto na API de produtos
+            ProdutoResponseDTO produtoDTO = produtosService.buscaProdutosPorId(item.getProdutoId());
+
+            // Retorna o DTO com as informações do produto
+            return new CarrinhoResponseDTO(
+                    item.getProdutoId(),
+                    produtoDTO.getNome(),
+                    produtoDTO.getPreco(),
+                    item.getQuantidade()
+            );
+        }).collect(Collectors.toList());
     }
 }
