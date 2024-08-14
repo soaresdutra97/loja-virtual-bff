@@ -13,7 +13,7 @@ public class CarrinhoResponseDTO {
     private String nome;
     private BigDecimal preco;
     private int quantidade;
-    private BigDecimal subtotal;
+    //private BigDecimal subtotal;
 
 
     public CarrinhoResponseDTO(String produtoId, String nome, BigDecimal preco, int quantidade) {
@@ -21,6 +21,7 @@ public class CarrinhoResponseDTO {
         this.nome = nome;
         this.preco = preco;
         this.quantidade = quantidade;
-        this.subtotal = preco.multiply(BigDecimal.valueOf(quantidade));
+        //this.subtotal = preco.multiply(BigDecimal.valueOf(quantidade));
     }
+
 }

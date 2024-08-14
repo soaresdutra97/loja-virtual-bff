@@ -1,9 +1,7 @@
 package com.example.loja_virtual_bff.controllers;
 
-import com.example.loja_virtual_bff.api.request.CarrinhoProdutoDTO;
-import com.example.loja_virtual_bff.api.request.ProdutoRequestDTO;
+import com.example.loja_virtual_bff.api.request.CarrinhoRequestDTO;
 import com.example.loja_virtual_bff.api.response.CarrinhoResponseDTO;
-import com.example.loja_virtual_bff.business.entities.CarrinhoEntity;
 import com.example.loja_virtual_bff.business.services.CarrinhoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,8 +28,8 @@ public class CarrinhoController {
     })
     @PostMapping("/adicionar")
     public ResponseEntity<Void> adicionarProdutoAoCarrinho(@RequestParam Long usuarioId, @RequestBody
-    CarrinhoProdutoDTO carrinhoProdutoDTO) {
-        carrinhoService.adicionarProdutoAoCarrinho(usuarioId, carrinhoProdutoDTO);
+    CarrinhoRequestDTO carrinhoRequestDTO) {
+        carrinhoService.adicionarProdutoAoCarrinho(usuarioId, carrinhoRequestDTO);
         return ResponseEntity.ok().build();
     }
 

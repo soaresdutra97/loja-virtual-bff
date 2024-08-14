@@ -1,6 +1,6 @@
 package com.example.loja_virtual_bff.business.services;
 
-import com.example.loja_virtual_bff.api.request.CarrinhoProdutoDTO;
+import com.example.loja_virtual_bff.api.request.CarrinhoRequestDTO;
 import com.example.loja_virtual_bff.api.response.CarrinhoResponseDTO;
 import com.example.loja_virtual_bff.api.response.ProdutoResponseDTO;
 import com.example.loja_virtual_bff.business.entities.CarrinhoEntity;
@@ -33,10 +33,10 @@ public class CarrinhoService {
     @Autowired
     private ProdutosService produtosService;
 
-    public void adicionarProdutoAoCarrinho(Long usuarioId, CarrinhoProdutoDTO carrinhoProdutoDTO) {
+    public void adicionarProdutoAoCarrinho(Long usuarioId, CarrinhoRequestDTO carrinhoRequestDTO) {
 
         // Verifica se o produto existe
-        boolean produtoExiste = produtosService.existsPorId(carrinhoProdutoDTO.getProdutoId());
+        boolean produtoExiste = produtosService.existsPorId(carrinhoRequestDTO.getProdutoId());
 
         if (!produtoExiste) {
             throw new RuntimeException("Produto não encontrado");
@@ -47,19 +47,19 @@ public class CarrinhoService {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         // Verifica se o produto já existe no carrinho
-        CarrinhoEntity itemExistente = carrinhoRepository.findByUsuarioIdAndProdutoId(usuarioId, carrinhoProdutoDTO.getProdutoId())
+        CarrinhoEntity itemExistente = carrinhoRepository.findByUsuarioIdAndProdutoId(usuarioId, carrinhoRequestDTO.getProdutoId())
                 .orElse(null);
 
         if (itemExistente != null) {
             // Se o produto já existe, atualiza a quantidade
-            itemExistente.setQuantidade(itemExistente.getQuantidade() + carrinhoProdutoDTO.getQuantidade());
+            itemExistente.setQuantidade(itemExistente.getQuantidade() + carrinhoRequestDTO.getQuantidade());
             carrinhoRepository.save(itemExistente);
         } else {
             // Se o produto não existe, cria um novo item no carrinho
             CarrinhoEntity novoItem = new CarrinhoEntity();
             novoItem.setUsuario(usuario);
-            novoItem.setProdutoId(carrinhoProdutoDTO.getProdutoId());
-            novoItem.setQuantidade(carrinhoProdutoDTO.getQuantidade());
+            novoItem.setProdutoId(carrinhoRequestDTO.getProdutoId());
+            novoItem.setQuantidade(carrinhoRequestDTO.getQuantidade());
             carrinhoRepository.save(novoItem);
         }
     }
@@ -84,13 +84,13 @@ public class CarrinhoService {
         List<CarrinhoEntity> itens = carrinhoRepository.findByUsuarioId(usuarioId);
         return itens.stream().map(item -> {
             // Busca as informações do produto na API de produtos
-            ProdutoResponseDTO produtoDTO = produtosService.buscaProdutosPorId(item.getProdutoId());
+            ProdutoResponseDTO produto = produtosService.buscaProdutosPorId(item.getProdutoId());
 
             // Retorna o DTO com as informações do produto
             return new CarrinhoResponseDTO(
                     item.getProdutoId(),
-                    produtoDTO.getNome(),
-                    produtoDTO.getPreco(),
+                    produto.getNome(),
+                    produto.getPreco(),
                     item.getQuantidade()
             );
         }).collect(Collectors.toList());
