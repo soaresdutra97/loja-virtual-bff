@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,6 +67,18 @@ public class WishListService {
                 .orElseThrow(()-> new RuntimeException("Produto não encontrado no carrinho"));
         wishListRepository.delete(item);
     }
+
+
+    //Garante integridade Referencial
+    @KafkaListener(topics = "atualizaCarrinhoeWishList", groupId = "bff-group")
+    public void deletaProdutosWishListPelaAPI(String id){
+        WishListEntity itemExiste = wishListRepository.findByProdutoId(id).orElse(null);
+
+        if(itemExiste != null){
+            wishListRepository.deleteByProdutoId(id);
+        }
+    }
+
 
     public List<WishListResponseDTO> listarItensWishList(Long usuarioId){
         //Verifica se o usuário existe

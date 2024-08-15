@@ -75,6 +75,8 @@ public class CarrinhoService {
         carrinhoRepository.delete(item);
     }
 
+
+
     public List<CarrinhoResponseDTO> listarItensDoCarrinho(Long usuarioId) {
         // Verifica se o usuário existe
         UsuarioEntity usuario = usuarioRepository.findById(usuarioId)
