@@ -5,6 +5,7 @@ import com.example.loja_virtual_bff.api.response.CarrinhoResponseDTO;
 import com.example.loja_virtual_bff.api.response.ProdutoResponseDTO;
 import com.example.loja_virtual_bff.business.entities.CarrinhoEntity;
 import com.example.loja_virtual_bff.business.entities.UsuarioEntity;
+import com.example.loja_virtual_bff.business.entities.WishListEntity;
 import com.example.loja_virtual_bff.infrastructure.repositories.CarrinhoRepository;
 import com.example.loja_virtual_bff.infrastructure.repositories.UsuarioRepository;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -73,6 +75,17 @@ public class CarrinhoService {
         CarrinhoEntity item = carrinhoRepository.findByUsuarioIdAndProdutoId(usuarioId, produtoId)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado no carrinho"));
         carrinhoRepository.delete(item);
+    }
+
+
+    //Garante integridade Referencial
+    @KafkaListener(topics = "atualizaCarrinhoeWishList", groupId = "carrinho-group")
+    public void deletaProdutosCarrinhoPelaAPI(String id){
+        CarrinhoEntity itemExiste = carrinhoRepository.findByProdutoId(id).orElse(null);
+
+        if(itemExiste != null){
+            carrinhoRepository.deleteByProdutoId(id);
+        }
     }
 
 

@@ -70,7 +70,7 @@ public class WishListService {
 
 
     //Garante integridade Referencial
-    @KafkaListener(topics = "atualizaCarrinhoeWishList", groupId = "bff-group")
+    @KafkaListener(topics = "atualizaCarrinhoeWishList", groupId = "wishlist-group")
     public void deletaProdutosWishListPelaAPI(String id){
         WishListEntity itemExiste = wishListRepository.findByProdutoId(id).orElse(null);
 
