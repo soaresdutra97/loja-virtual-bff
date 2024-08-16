@@ -8,7 +8,7 @@ This is a complete BFF (Back-End for Front-End) system made by me using Java Spr
 Technologies: Spring Boot, JPA, Feign Client, PostgreSQL, Swagger, Spring Security with JWT, Kafka and JUnit + Mockito tests.
 
 This BFF Contains: 
-A communication with 2 others APis ([Payment API](https://github.com/soaresdutra97/ApiPayment), ([Product API](https://github.com/soaresdutra97/ApiProducts) using Feign Client.
+A communication with 2 others APis [Payment API](https://github.com/soaresdutra97/ApiPayment), [Product API](https://github.com/soaresdutra97/ApiProducts) using Feign Client.
 This BF has a User CRUD, with Roles, and also a Cart and Wishlist.
 
 ## Table of Contents
