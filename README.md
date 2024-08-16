@@ -66,7 +66,7 @@ GET /usuarios/usr - Retrieve info of authenticated JWT User
 
 GET /usuarios/buscaremail - Find User by email (ADMIN access required)
 
-GET /usuarios/all - Return all Users (ADMIN access required)
+GET /usuarios/all - Returns all Users (ADMIN access required)
 
 DELETE /usuarios/deletar - Delete user by email (ADMIN access required)
 ```
@@ -79,11 +79,11 @@ POST /produtos - Register a new product (ADMIN access required).
 
 DELETE /produtos - Delete Product by ID (ADMIN access required).
 
-GET /produtos/produtos - Return all Products
+GET /produtos/produtos - Returns all Products
 
 GET /produtos/search - Find Product by ID
 
-GET /produtos/exists - Return boolean if Product exists
+GET /produtos/exists - Returns boolean if Product exists
 
 ```
 
@@ -91,14 +91,14 @@ Wishlist:
 ```markdown
 POST /wishlist/adicionar - Register a new product to the Wishlist
 
-GET /wishlist/listar - Return all Products in the Wishlist
+GET /wishlist/listar - Returns all Products in the Wishlist
 
 DELETE /wishlist/remover - Delete a Product in the Wishlist by User ID and Product ID
 ```
 
 Payments:
 ```markdown
-POST /pagamentos/compra - Return a Boolean if the payment is approved or not.
+POST /pagamentos/compra - Returns a Boolean if the payment is approved or not.
 If you send a "numeroCartao": "string" ends with 8080 it will returns true, else false.
 ```
 
@@ -106,7 +106,7 @@ Cart:
 ```markdown
 POST /carrinho/adicionar - Register a new product to the Cart
 
-GET /carrinho/listar - Return all Products in the Cart
+GET /carrinho/listar - Returns all Products in the Cart
 
 DELETE /carrinho/remover - Delete a Product in the Cart by User ID and Product ID
 ```
