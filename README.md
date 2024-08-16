@@ -53,7 +53,7 @@ git clone https://github.com/soaresdutra97/ApiPayment.git
 
 6. Install [Kafka](https://kafka.apache.org/downloads) and [Zookeeper](https://zookeeper.apache.org/)
 
-7. Create a Kafka Cluster and a Topic called atualizaCarrinhoeWisList
+7. Create a Kafka Cluster and a Topic called atualizaCarrinhoeWishList
 
 
 ## Usage
@@ -103,7 +103,7 @@ DELETE /wishlist/remover - Delete a Product in the Wishlist by User ID and Produ
 Payments:
 ```markdown
 POST /pagamentos/compra - Returns a Boolean if the payment is approved or not.
-If you send a credit card number "numeroCartao": "string" ends with 8080 it will returns true, else false.
+If you send a credit card number "numeroCartao": "string" ending with 8080 it will returns true, else false.
 ```
 
 Cart:
