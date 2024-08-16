@@ -51,7 +51,7 @@ git clone https://github.com/soaresdutra97/ApiPayment.git
 
 5. Run all Apis (BFF, Products and Payment)
 
-6. Install [Kafka](https://kafka.apache.org/downloads) and [Zookeeper](https://zookeeper.apache.org/)
+6. Install [Kafka](https://kafka.apache.org/downloads) and [Zookeeper](https://zookeeper.apache.org/) and run both
 
 7. Create a Kafka Cluster and a Topic called atualizaCarrinhoeWishList
 
