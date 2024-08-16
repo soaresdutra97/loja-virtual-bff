@@ -49,7 +49,11 @@ git clone https://github.com/soaresdutra97/ApiPayment.git
 
 4.  Open the application-dev.yaml and change the spring: datasource: url: to jdbc:postgresql://YOUR_DATABASE_IP:5432/postgres
 
-5. Run all Apis (BFF, Products and Payment)  
+5. Run all Apis (BFF, Products and Payment)
+
+6. Install Kafka and Zookeeper ([Kafka](https://kafka.apache.org/downloads) , ([Zookeeper](https://zookeeper.apache.org/)
+
+7. Create a Kafka Cluster and a Topic called atualizaCarrinhoeWisList
 
 
 ## Usage
