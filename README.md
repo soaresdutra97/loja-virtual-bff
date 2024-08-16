@@ -9,7 +9,7 @@ Technologies: Spring Boot, JPA, Feign Client, PostgreSQL, Swagger, Spring Securi
 
 This BFF Contains: 
 A communication with 2 others APis (Payment API, Product API) using Feign Client.
-This BF has a User CRUD, with Roles, and also a Chart and Wishlist.
+This BF has a User CRUD, with Roles, and also a Cart and Wishlist.
 
 ## Table of Contents
 
@@ -102,13 +102,13 @@ POST /pagamentos/compra - Return a Boolean if the payment is approved or not.
 If you send a "numeroCartao": "string" ends with 8080 it will returns true, else false.
 ```
 
-Chart:
+Cart:
 ```markdown
-POST /carrinho/adicionar - Register a new product to the Chart
+POST /carrinho/adicionar - Register a new product to the Cart
 
-GET /carrinho/listar - Return all Products in the Chart
+GET /carrinho/listar - Return all Products in the Cart
 
-DELETE /carrinho/remover - Delete a Product in the Chart by User ID and Product ID
+DELETE /carrinho/remover - Delete a Product in the Cart by User ID and Product ID
 ```
 
 Authentication
