@@ -61,7 +61,7 @@ ADMIN -> Admin role for managing partners (registering new partners).
 To access protected endpoints as an ADMIN user, provide the appropriate authentication credentials in the request header.
 
 ## Database
-The project utilizes [PostgresSQL](https://www.postgresql.org/) as the database. The necessary database migrations are managed using Flyway.
+The project utilizes [PostgresSQL](https://www.postgresql.org/) as the database.
 
 ## Contributing
 
