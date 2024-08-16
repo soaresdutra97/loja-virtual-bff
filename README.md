@@ -19,36 +19,106 @@ This BF has a User CRUD, with Roles, and also a Chart and Wishlist.
 - [API Endpoints](#api-endpoints)
 - [Authentication](#authentication)
 - [Database](#database)
-- [Contributing](#contributing)
 
 - ## Installation
 
-1. Clone the repository:
+1. Clone all necessary repositories to run the project:
+
+BFF API - This contains a communication with API Products and Payment API - It runs in port 8484
 
 ```bash
 git clone https://github.com/soaresdutra97/loja-virtual-bff.git
 ```
 
+Products API - This contains the CRUD of Products - It runs in port 8383
+
+```bash
+git clone https://github.com/soaresdutra97/ApiProducts.git
+```
+
+Payment API - This contains to BFF a logic that returns True or False for payment. - It runs in port 8282
+
+```bash
+git clone https://github.com/soaresdutra97/ApiPayment.git
+```
+
+
 2. Install dependencies with Gradle
 
-3. Install [PostgresSQL](https://www.postgresql.org/)
+3. Install [PostgresSQL](https://www.postgresql.org/) and create a database called postgres
+
+4.  Open the application-dev.yaml and change the spring: datasource: url: to jdbc:postgresql://YOUR_DATABASE_IP:5432/postgres
+
+5. Run all Apis (BFF, Products and Payment)  
+
 
 ## Usage
 
-1. Start the application with Maven
-2. The API will be accessible at http://localhost:8080
+1. After starts, the API BFF will be accessible at http://localhost:8484/swagger-ui/index.html#/
 
 ## API Endpoints
-The API provides the following endpoints:
 
+Users:
 ```markdown
-GET /product - Retrieve a list of all products. (all authenticated users)
+PUT /usuarios/atualizar - Update User by ID
 
-POST /product - Register a new product (ADMIN access required).
+GET /usuarios/usr - Retrieve info of authenticated JWT User
 
-POST /auth/login - Login into the App
+GET /usuarios/buscaremail - Find User by email (ADMIN access required)
 
-POST /auth/register - Register a new user into the App
+GET /usuarios/all - Return all Users (ADMIN access required)
+
+DELETE /usuarios/deletar - Delete user by email (ADMIN access required)
+```
+
+Products:
+```markdown
+PUT /produtos - Update Product by ID (only admin can put)
+
+POST /produtos - Register a new product (ADMIN access required).
+
+DELETE /produtos - Delete Product by ID (ADMIN access required).
+
+GET /produtos/produtos - Return all Products
+
+GET /produtos/search - Find Product by ID
+
+GET /produtos/exists - Return boolean if Product exists
+
+```
+
+Wishlist:
+```markdown
+POST /wishlist/adicionar - Register a new product to the Wishlist
+
+GET /wishlist/listar - Return all Products in the Wishlist
+
+DELETE /wishlist/remover - Delete a Product in the Wishlist by User ID and Product ID
+```
+
+Payments:
+```markdown
+POST /pagamentos/compra - Return a Boolean if the payment is approved or not.
+If you send a "numeroCartao": "string" ends with 8080 it will returns true, else false.
+```
+
+Chart:
+```markdown
+POST /carrinho/adicionar - Register a new product to the Chart
+
+GET /carrinho/listar - Return all Products in the Chart
+
+DELETE /carrinho/remover - Delete a Product in the Chart by User ID and Product ID
+```
+
+Authentication
+```markdown
+POST /auth/register - Register a new user into the App.
+
+Atention: The API will create a User with USER role by default, to access protected endpoints as an ADMIN user, you should create a new "Register" and go to the Database (With Dbeaver, for example) and change Role to 0 if you want a ADMIN user.
+
+POST /auth/login - Login into the App returns a JWT Token, and you have to put it in "Authorize" section
+to permit you make http requests. 
 ```
 
 ## Authentication
@@ -58,13 +128,8 @@ The API uses Spring Security for authentication control. The following roles are
 USER -> Standard user role for logged-in users.
 ADMIN -> Admin role for managing partners (registering new partners).
 ```
-To access protected endpoints as an ADMIN user, provide the appropriate authentication credentials in the request header.
+
+To access protected endpoints as an ADMIN user, you should create a new "Register" and go to the Database (With Dbeaver, for example) and change Role to 0 if you want a ADMIN user.
 
 ## Database
 The project utilizes [PostgresSQL](https://www.postgresql.org/) as the database.
-
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request to the repository.
-
-When contributing to this project, please follow the existing code style, [commit conventions](https://www.conventionalcommits.org/en/v1.0.0/), and submit your changes in a separate branch.
