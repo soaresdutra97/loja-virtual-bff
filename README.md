@@ -103,7 +103,7 @@ DELETE /wishlist/remover - Delete a Product in the Wishlist by User ID and Produ
 Payments:
 ```markdown
 POST /pagamentos/compra - Returns a Boolean if the payment is approved or not.
-If you send a "numeroCartao": "string" ends with 8080 it will returns true, else false.
+If you send a credit card number "numeroCartao": "string" ends with 8080 it will returns true, else false.
 ```
 
 Cart:
