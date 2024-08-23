@@ -81,23 +81,4 @@ public class UsuariosController {
         return ResponseEntity.ok(usuario);
     }
 
-    @Operation(summary = "retorna token ativo", method ="GET")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuários encontrados com sucesso"),
-            @ApiResponse(responseCode = "500", description = "Usuários não encontrados com sucesso"),
-    })
-    @GetMapping("/tkn")
-    public ResponseEntity<String> retornaToken(){
-        String token = tokenService.getActiveToken();
-        System.out.println(token);
-        if (token != null) {
-            // Retorna o token JWT ativo
-            return ResponseEntity.ok(token);
-        } else {
-            // Retorna uma resposta 401 Unauthorized se o token não estiver presente
-            return ResponseEntity.status(401).body("Nenhum token JWT ativo encontrado.");
-        }
-    }
-
-
 }

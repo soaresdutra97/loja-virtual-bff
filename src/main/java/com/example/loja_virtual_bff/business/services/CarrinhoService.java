@@ -80,7 +80,7 @@ public class CarrinhoService {
 
     //Garante integridade Referencial
     @KafkaListener(topics = "atualizaCarrinhoeWishList", groupId = "carrinho-group")
-    public void deletaProdutosCarrinhoPelaAPI(String id){
+    public void deletaProdutosCarrinhoPelaAPIProdutos(String id){
         CarrinhoEntity itemExiste = carrinhoRepository.findByProdutoId(id).orElse(null);
 
         if(itemExiste != null){

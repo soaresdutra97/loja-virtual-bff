@@ -1,0 +1,98 @@
+#PERFIL COM CONFIGURAÇÕES PARA RODAR LOCAL:
+
+#NÃO ESQUECER DE ACRESCENTAR NO VM OPTIONS:
+# -Dspring.profiles.active=dev
+
+spring:
+    config:
+      activate:
+        on-profile: dev
+
+    datasource:
+      url: jdbc:postgresql://localhost:5432/postgres
+      username: root
+      password: root
+      driver-class-name: org.postgresql.Driver
+
+    jpa:
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          package-to-scan: com.example.FakeApiProducts.infrastructure.entities
+          format_sql: true
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+
+    cloud:
+      loadbalancer:
+        ribbon:
+          enable: true
+
+kafka:
+  bootstrap-servers: localhost:9092
+
+security:
+  secret-key: my_key
+
+server:
+  port: 8484
+
+client1:
+  pagamento-client: ${CLIENT1_PAGAMENTO_CLIENT:localhost:8383}
+
+client2:
+  produtos-client: ${CLIENT2_PRODUTOS_CLIENT:localhost:8181}
+
+---
+
+#PERFIL COM CONFIGURAÇÕES PARA O DOCKER-COMPOSE:
+
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        package-to-scan: com.example.FakeApiProducts.infrastructure.entities
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  cloud:
+    loadbalancer:
+      ribbon:
+        enable: true
+
+
+  security:
+    secret-key: ${SECURITY_SECRET_KEY}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+
+  client1:
+    pagamento-client: ${CLIENT1_PAGAMENTO_CLIENT}
+
+  client2:
+    produtos-client: ${CLIENT2_PRODUTOS_CLIENT}
+
+server:
+  port: 8080
+
+---
+
+#CONFIGURAÇÕES GERAIS DO KAFKA
+
+kafka:
+   consumer:
+     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+     value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+     auto-offset-reset: earliest
